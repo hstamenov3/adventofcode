@@ -17,8 +17,7 @@ const passChecker =  new class {
     readFile() {
         let arrayOfArrays
         let arrayOfLines = fs.readFileSync(this.dataPath, {encoding: 'utf8'}).split('\n')
-        arrayOfArrays = arrayOfLines.map((line) => line.split(''))
-        arrayOfArrays = this.fixEmptyArrays(arrayOfArrays)
+        arrayOfArrays = arrayOfLines.map((line) => line.trim().split(''))
         return Promise.resolve(arrayOfArrays);
     }
     // TODO make it work with reduce or object key 
@@ -27,23 +26,14 @@ const passChecker =  new class {
         let movedY = moveDown
         let movedX = moveRight
   
-        while (arrayMap.length > pathTraveled && !!arrayMap[movedY]) {
+        while (arrayMap.length > movedY && !!arrayMap[movedY]) {
 
-            // console.warn(arrayMap[movedY], 'Position at')
-            if (arrayMap[movedY][movedX] === '#') {
-                arrayMap[movedY][movedX] = 'X'
-                this.hitTrees ++
-            } else {
-                arrayMap[movedY][movedX] = 'O'
+            if (arrayMap[movedY][movedX % arrayMap[0].length] === '#') {
+                pathTraveled++;
+                this.hitTrees++
             }
-            pathTraveled++
-            movedY = movedY + moveDown
-            movedX = movedX + moveRight
-            
-            if  (arrayMap[1].length < movedX){
-                console.warn(arrayMap[1].length, movedX, 'Position at')
-                movedX = (movedX - arrayMap[1].length)
-            }
+            movedY+=1
+            movedX+=3
         }
         this.saveFile(arrayMap)
         return arrayMap
