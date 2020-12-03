@@ -32,8 +32,8 @@ const passChecker =  new class {
                 pathTraveled++;
                 this.hitTrees++
             }
-            movedY+=1
-            movedX+=3
+            movedY+= moveRight
+            movedX+= moveDown
         }
         this.saveFile(arrayMap)
         return this.hitTrees
