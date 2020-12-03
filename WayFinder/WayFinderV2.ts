@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 
 /* 
-In this example, traversing the map using this slope would cause you to encounter 7 trees.
+In this example, traversing the map using this slope would cause you to encounter 7 this.mapTraverser.
 
-Starting at the top-left corner of your map and following a slope of right 3 and down 1, how many trees would you encounter?
+Starting at the top-left corner of your map and following a slope of right 3 and down 1, how many this.mapTraverser would you encounter?
 */
 
 const passChecker =  new class {
@@ -11,7 +11,7 @@ const passChecker =  new class {
     dataUpdatedPath = './updatedData'
     updatedMap: string[] = []
     currentPosition = {right: 0, down: 0}
-    hitTrees = 0
+    
 
 
     readFile() {
@@ -23,6 +23,7 @@ const passChecker =  new class {
     // TODO make it work with reduce or object key 
     mapTraverser (arrayMap: string[][], moveRight: number, moveDown: number) {
         let pathTraveled = 0;
+        let hitTrees = 0
         let movedY = moveDown
         let movedX = moveRight
   
@@ -30,13 +31,13 @@ const passChecker =  new class {
 
             if (arrayMap[movedY][movedX % arrayMap[0].length] === '#') {
                 pathTraveled++;
-                this.hitTrees++
+                hitTrees++
             }
-            movedY+=1
-            movedX+=3
+            movedY+= moveDown
+            movedX+= moveRight
         }
         this.saveFile(arrayMap)
-        return this.hitTrees
+        return hitTrees
     }
 
     fixEmptyArrays (arrayOfArrays: any[]) {
@@ -53,7 +54,7 @@ const passChecker =  new class {
 
     logResult (result: number) {
 
-        console.log(result, 'answer is 42')
+        console.log(result, 'result of multi traverse')
     }
 
     saveFile = (dataToStore: any[]) => {
@@ -70,7 +71,8 @@ const passChecker =  new class {
         this.readFile().then((result) =>{
             // this.logResult(result[0])
 
-            this.logResult(this.mapTraverser(result, 3, 1))
+            this.logResult(this.mapTraverser(result, 1, 1) * this.mapTraverser(result, 3, 1) * this.mapTraverser(result, 5, 1) *
+                 this.mapTraverser(result, 7, 1) * this.mapTraverser(result, 1, 2), )
         })
     }
 }
