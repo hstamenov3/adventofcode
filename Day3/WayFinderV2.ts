@@ -30,8 +30,11 @@ const passChecker =  new class {
         while (arrayMap.length > movedY && !!arrayMap[movedY]) {
 
             if (arrayMap[movedY][movedX % arrayMap[0].length] === '#') {
+                arrayMap[movedY][movedX % arrayMap[0].length] = 'x'
                 pathTraveled++;
                 hitTrees++
+            }else {
+                arrayMap[movedY][movedX % arrayMap[0].length] = 'o'
             }
             movedY+= moveDown
             movedX+= moveRight
